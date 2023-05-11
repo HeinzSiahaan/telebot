@@ -70,7 +70,7 @@ def send_about(message):
 df = pd.read_csv('data_input/facebook_ads_v2.csv', parse_dates=['reporting_date'])
 
 # TO DO: get unique values of campaign_id
-df['campaign_id'] = df['campaign_id'].astype('object')
+df['campaign_id'] = df['campaign_id'].astype('string')
 unique_campaign = df['campaign_id'].unique()
 
 # TO DO: change the data type of ad_id, age, and gender
