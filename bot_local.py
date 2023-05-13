@@ -57,7 +57,7 @@ def send_about(message):
         about = temp.substitute(
             STUDENT_NAME = 'Heinz Metrosan Donradt S',
             BATCH_ACADEMY = 'Vulcan',
-            GITHUB_REPO_LINK = 'https://classroom.google.com/c/NjAxNzczMjI1MjU5'
+            GITHUB_REPO_LINK = 'https://github.com/HeinzSiahaan/telebot'
         )
 
     bot.send_message(
