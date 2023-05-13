@@ -224,7 +224,7 @@ def echo_all(message):
     # TO DO: emoji
     with open('template_text/default.txt', mode='r', encoding='utf-8') as f:
         temp = Template(f.read())
-        default = temp.substitute(EMOJI = '🙏')
+        default = temp.substitute(EMOJI = emoji.emojize(':folded_hands:'))
         
     bot.reply_to(message, default)
 
