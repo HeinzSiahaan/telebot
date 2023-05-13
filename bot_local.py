@@ -15,6 +15,8 @@ import matplotlib.pyplot as plt
 import matplotlib
 matplotlib.use('Agg')
 
+import numpy as np
+
 # SETUP: TELEGRAM BOT API TOKEN
 load_dotenv()
 TOKEN = os.environ['TOKEN']
@@ -55,7 +57,7 @@ def send_about(message):
         about = temp.substitute(
             STUDENT_NAME = 'Heinz Metrosan Donradt S',
             BATCH_ACADEMY = 'Vulcan',
-            GITHUB_REPO_LINK = 'https://github.com/HeinzSiahaan/telebot'
+            GITHUB_REPO_LINK = 'https://classroom.google.com/c/NjAxNzczMjI1MjU5'
         )
 
     bot.send_message(
@@ -193,23 +195,24 @@ def send_plot(message):
             bot.send_photo(chat_id, img)
 
         # (EXTRA CHALLENGE) Voice Message
-        # plot_info = list(zip(
-        #     [___, ___, ___],
-        #     ___,
-        #     ___))
+        plot_info = list(zip(
+            ['Total Spent', 'Total Approved Conversion', 'Average CPC'],
+            [df_plot.index[np.argmax(df_plot['spent'])],df_plot.index[np.argmax(df_plot['approved_conversion'])],df_plot.index[np.argmax(df_plot['cpc'])]],
+            [df_plot.index[np.argmin(df_plot['spent'])],df_plot.index[np.argmin(df_plot['approved_conversion'])],df_plot.index[np.argmin(df_plot['cpc'])]]))
 
-        # plot_text = f'This is your requested plot for Campaign ID {selected_campaign_id}.\n'
-        # for col, maxi, mini in plot_info:
-        #     text = f"Age group with the highest {col} is {maxi}, while the lowest is {mini}.\n"
-        #     plot_text += text
 
-        # # save voice message
-        # speech = gTTS(text = plot_text)
-        # speech.save('output/plot_info.ogg')
+        plot_text = f'This is your requested plot for Campaign ID {selected_campaign_id}.\n'
+        for col, maxi, mini in plot_info:
+            text = f"Age group with the highest {col} is {maxi}, while the lowest is {mini}.\n"
+            plot_text += text
 
-        # # send voice message
-        # with open('output/plot_info.ogg', 'rb') as f:
-        #     bot.send_voice(chat_id, f)
+        # save voice message
+        speech = gTTS(text = plot_text)
+        speech.save('output/plot_info.ogg')
+
+        # send voice message
+        with open('output/plot_info.ogg', 'rb') as f:
+            bot.send_voice(chat_id, f)
     else:
         bot.send_message(chat_id, 'Campaign ID not found. Please try again!')
         ask_id_plot(message)
